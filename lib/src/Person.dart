@@ -9,7 +9,20 @@ class Person {
   var name;
   int age = 20;
 
+  /**
+   * 主构造函数。
+   * 一个类中只能有一个主构造函数。
+   */
   Person(this.name);
+
+  /**
+   * 命名构造函数。
+   * 一个类中可以有多个命名构造函数。
+   */
+  Person.info(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
 
   String greet() => 'I am $name';
 

@@ -77,6 +77,7 @@ void function7<T extends Person>(T person) {
 }
 
 /**
+ * Dart是一种单线程的语言，故遇到有延迟的操作，都要异步处理，否则会造成堵塞。
  * Dart支持异步操作，语言提供了Future和Stream这两个异步操作类。
  * Future只能返回一次异步获取的数据。
  * Stream则可以返回多次异步获取的数据。
@@ -85,6 +86,8 @@ void function7<T extends Person>(T person) {
  * Future对象有两种状态:未完成/完成
  * await的意思是等待Future对象完成
  * 要使用await，必须在函数体前加上async
+ *
+ * Future是Dart内置的一个有自己队列策略的延迟计算对象
  */
 Future function8() {
   //返回一个异步Future对象，5秒后才会完成。
