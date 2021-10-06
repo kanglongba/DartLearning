@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'src/Dog.dart';
 import 'src/Person.dart';
 
@@ -121,11 +123,49 @@ Future function8() {
 
 /**
  * 这里的async并不是并行执行，它仅仅是一个语法糖，简化Future API的使用。
+ * await/async可以理解为协程的支持
+ * await要配合Future来使用
+ * 会同步的获取等待Future的结果返回，才会继续往下走
  */
 void function9() async {
   print('开始获取IP');
   String ip = await function8();
   print('ip=$ip');
+}
+
+//Stream
+//异步生成器，生成的就是Stream
+Stream<String> readFile() async* {
+  // 该方法其实是用的异步生成器来生成的Stream对象
+  for (int i = 1; i <= 3; i++) {
+    sleep(Duration(seconds: 1));
+    yield 'line ${i}'; // 使用yield向Stream中发射数据
+  }
+}
+
+void runStream() {
+  // 输出结果上，会每隔1秒打印一次
+  readFile().listen((v) {
+    print(v);
+  });
+}
+
+//同步生成器，生成的是Iterable对象
+Iterable<int> naturalsTo(int n) sync* {
+  int k = 0;
+  while (k < n) {
+    yield k++; //使用yield向Iterable中发射数据
+  }
+}
+
+/**
+ * 扩展函数。跟Kotlin就很像了。
+ * since dart 2.7
+ */
+extension MyPersonExt on Person {
+  study() {
+    print('study');
+  }
 }
 
 int function10(int a, int b) {
@@ -314,6 +354,24 @@ function22(int one, int two, int Function(int, int) func) {
   return func(one, two);
 }
 
+//dart可以将任何非null的对象作为异常拋出，而不局限于Exception或Error类型
+function23(bool sw) {
+  if (sw) {
+    throw 'some exception';
+  } else {
+    throw FormatException('format exception');
+  }
+}
+
+function24() {
+  try {
+    function23(true);
+  } catch (e) {
+    print(e);
+    rethrow; // rethrow可以将接收到的异常重新拋出去
+  }
+}
+
 void main() {
   print("Hello World!");
   var person = Person("qony");
@@ -321,6 +379,8 @@ void main() {
   person.height789 = 226;
   print(person.height123);
   Person.printCountry();
+  //调用扩展函数
+  person.study();
   d = "123";
   print(list6);
   print(map1["key1"]);
@@ -352,4 +412,5 @@ void main() {
   print(j);
   function21();
   print(function22(12, 23, function10));
+  runStream();
 }
