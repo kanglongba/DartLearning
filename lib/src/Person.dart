@@ -6,14 +6,31 @@
  * 枚举类型是一种特殊的类。
  */
 class Person {
+  //静态变量
+  static String COUNTRY = "china";
+
+  /**
+   * 变量和方法默认都是public的
+   */
   var name;
-  int age = 20;
+  int age = 10;
+
+  /**
+   * 变量前面加'_'，是私有变量
+   */
+  int _height = 100;
 
   /**
    * 主构造函数。
    * 一个类中只能有一个主构造函数。
+   * 这个是简略写法，相当于下面被注释的构造函数
+   *
    */
   Person(this.name);
+
+  // Person(String name) {
+  //   this.name = name;
+  // }
 
   /**
    * 命名构造函数。
@@ -31,7 +48,37 @@ class Person {
    */
   sayHello() => "hello";
 
-  print1() {
+  printName() {
     print('the name is $name');
+  }
+
+  /**
+   * 方法前面加'_'，是私有方法
+   */
+  _printHeight() {
+    print('身高=$_height');
+  }
+
+  /**
+   * get函数
+   * height123的名称随意，不过推荐和私有变量名一致
+   */
+  int get height123 {
+    return _height;
+  }
+
+  /**
+   * set函数
+   * height789的名称随意，不过推荐和私有变量名一致
+   */
+  set height789(int value) {
+    this._height = value;
+  }
+
+  /**
+   * 静态方法
+   */
+  static printCountry() {
+    print(COUNTRY);
   }
 }

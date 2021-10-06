@@ -20,15 +20,40 @@ const e = '12345';
 //运行时常量
 final f = 13;
 String g = '123456';
+//使用三个单引号或者三个双引号创建多行字符串
+String j = '''第一行。
+第二行。
+第三行。
+''';
+//在字符串前加上 r 作为前缀创建 “raw” 字符串（即不会被做任何处理（比如转义）的字符串）
+String i = r'在 raw 字符串中，转义字符串 \n 会直接输出 “\n” 而不是转义为换行。';
+var k = null;
+//表达式 1 ?? 表达式 2：如果表达式 1 为非 null 则返回其值，否则执行表达式 2 并返回其值
+var l = k ?? i;
 
 List list1 = [1, 2, 3];
 var list2 = [1, '123', false, 4];
 var list3 = List.empty();
-//...是拓展操作符，list4.length = 4
+//...是扩展操作符，list4.length = 4
 var list4 = [1, ...list1];
+//...?是 null-aware operator，表示非空才扩展。
+var list7 = [1, ...?list3];
 var isIOS = false;
 var list5 = ["windows", if (isIOS) 'ios' else 'android', "unix", 'linux'];
 var list6 = ['unknown', for (var i in list5) i.toUpperCase()];
+
+var map1 = {
+  "key1": "value1",
+  "key2": 2,
+  "key3": [1, 2, 3]
+};
+
+var set1 = {'pony', 'jack', 'charles'};
+
+//指定类型
+var set2 = <String>{'pony', 'jack', 'charles'};
+var list8 = <int>[1, 2, 3];
+var map2 = <String, int>{'key1': 1, 'key2': 2};
 
 /**
  * dart中函数也是对象，它的类型是Function。它可以被赋值给变量或者作为其他函数的参数。
@@ -118,7 +143,7 @@ abstract class A {
     return 'A';
   }
 
-  //抽象方法
+  //抽象方法，跟java中不同，抽象方法不用加abstract关键字
   void aa();
 }
 
@@ -132,12 +157,174 @@ class B extends A {
   }
 }
 
+//if-else和switch-case跟java中的用法一样。
+void function11(int num) {
+  if (num.isEven) {
+    print('奇数');
+  } else if (num.isOdd) {
+    print('偶数');
+  } else {
+    print('其他');
+  }
+  switch (num) {
+    case 1:
+      print('1');
+      break;
+    case 2:
+      print('2');
+      break;
+    default:
+      print('其他值');
+      break;
+  }
+}
+
+//循环控制条件业与Java一样。
+void function12(int num) {
+  for (int i = 0; i <= num; i++) {
+    print(i);
+  }
+  int j = 0;
+  while (j <= num) {
+    print(j);
+    j++;
+  }
+  int k = 0;
+  do {
+    print(k);
+    k++;
+  } while (k <= num);
+}
+
+//循环退出与Java一样。
+void function13() {
+  out:
+  for (int i = 0; i <= 5; i++) {
+    if (i == 4) {
+      continue;
+    }
+    print("i=$i");
+    if (i == 3) {
+      for (int j = 0; j <= 4; j++) {
+        print("j=$j");
+        if (j == 4) {
+          break out; //跳出到最外层：out。如果省略 out，只会跳出本层循环。
+        }
+      }
+    }
+  }
+}
+
+//遍历集合
+void function14() {
+  var list = [1, 3, 5, 7];
+  for (int i = 0; i < list.length; i++) {
+    print(list[i]);
+  }
+  for (int a in list) {
+    print(a);
+  }
+
+  list.forEach((element) {
+    print("e=$element");
+  });
+  var it = list.iterator;
+  while (it.moveNext()) {
+    print(it.current);
+  }
+  map1.forEach((key, value) {
+    print('key=$key, value=$value');
+  });
+}
+
+//fun是dynamic类型，也可以明确声明成Function类型
+function15(fun) {
+  print("function15");
+  fun();
+}
+
+function16() {
+  //这在Dart里面是一个函数，在Kotlin中是一个函数类型的变量。
+  Function fun = () {
+    print('function16');
+  };
+  function15(fun);
+}
+
+//非空操作
+function17() {
+  /**
+   * 这里有四点与Kotlin一模一样：
+   * ？声明可空变量
+   * new关键字可以省略
+   * 非空变量不可以赋值null（不过使用 dynamic/var 声明的变量可以赋值null）。
+   * ! 表示确保不为null
+   */
+  Person? person = new Person("pony");
+  person = null;
+  //非空调用，与Kotlin一模一样
+  person?.printName();
+}
+
+//类型判断
+function18() {
+  var pony = null;
+  pony = Person('pony');
+  if (pony is Person) {
+    //这里不用强转类型了，编译器已经认定pony是Person对象，可以直接调用Person的方法。
+    pony.printName();
+  }
+}
+
+//类型强转
+function19() {
+  dynamic jack = Person.info('jack', 50);
+  (jack as Person).printName();
+}
+
+//级联操作，效果类似Kotlin中的let/apply这类方法
+function20() {
+  var jack = Person('charles');
+  jack
+    ..printName()
+    ..sayHello()
+    ..greet()
+    ..height789 = 226;
+}
+
+//这段代码有意思。
+function21() {
+  //声明列表
+  var callbacks = [];
+  for (var i = 0; i < 2; i++) {
+    //列表的元素是一个函数。在Dart中函数也是一个对象，类型是Function。
+    callbacks.add(() => print(i));
+  }
+  //遍历列表，并调用函数。最终输出 0 和 1.
+  callbacks.forEach((c) => c());
+  // callbacks.forEach((element) {
+  //   element();
+  // });
+}
+
+/**
+ * 高阶函数：函数作为参数
+ */
+function22(int one, int two, int Function(int, int) func) {
+  return func(one, two);
+}
+
 void main() {
   print("Hello World!");
   var person = Person("qony");
-  person.print1();
+  person.printName();
+  person.height789 = 226;
+  print(person.height123);
+  Person.printCountry();
   d = "123";
   print(list6);
+  print(map1["key1"]);
+  map1['key4'] = 4;
   print(getName());
   function1('abcd');
   print(function2(3)(4));
@@ -153,4 +340,16 @@ void main() {
   var dog = Dog();
   dog.play();
   dog.run();
+  function11(5);
+  function12(5);
+  function13();
+  function16();
+  function17();
+  function18();
+  function19();
+  function20();
+  print(i);
+  print(j);
+  function21();
+  print(function22(12, 23, function10));
 }
