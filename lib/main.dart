@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:DartLearning/src/School.dart';
+
 import 'src/Dog.dart';
 import 'src/Person.dart';
 
@@ -391,6 +393,11 @@ function25() {
   function26();
 }
 
+function28() {
+  School school = School(Person('pony'));
+  school.holiday(month: 7, day: 1);
+}
+
 void main() {
   print("Hello World!");
   var person = Person("qony");
@@ -434,4 +441,5 @@ void main() {
   runStream();
   function25();
   function24();
+  function28();
 }

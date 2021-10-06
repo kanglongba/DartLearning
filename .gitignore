@@ -3,3 +3,7 @@
 *.ipr
 *.iws
 .idea
+.dart_tool
+.packages
+pubspec.lock
+DartLearning.iml

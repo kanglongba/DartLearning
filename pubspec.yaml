@@ -1,0 +1,8 @@
+name: DartLearning
+dependencies:
+  meta: ^1.7.0
+  intl: ^0.17.0
+  date_format: ^2.0.4
+
+environment:
+  sdk: '>=2.14.0 <3.0.0'
