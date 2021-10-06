@@ -1,4 +1,4 @@
-class Sleep {
+mixin Sleep {
   void sleep() {
     print('sleep');
   }

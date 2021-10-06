@@ -39,7 +39,8 @@ var list3 = List.empty();
 //...是扩展操作符，list4.length = 4
 var list4 = [1, ...list1];
 //...?是 null-aware operator，表示非空才扩展。
-var list7 = [1, ...?list3];
+var list9 = null;
+var list7 = [1, ...?list9];
 var isIOS = false;
 var list5 = ["windows", if (isIOS) 'ios' else 'android', "unix", 'linux'];
 var list6 = ['unknown', for (var i in list5) i.toUpperCase()];
@@ -59,6 +60,8 @@ var map2 = <String, int>{'key1': 1, 'key2': 2};
 
 /**
  * dart中函数也是对象，它的类型是Function。它可以被赋值给变量或者作为其他函数的参数。
+ * 所有的函数都有返回值，如果函数返回值定义为void，则接收到的返回值其实是null.
+ * 如果省略了函数的返回值类型声明，那么函数返回一个 dynamic 类型的值。
  */
 int fibonacci(int n) {
   if (n == 0 || n == 1) {
@@ -101,6 +104,10 @@ void function6(String name, [String sex = 'male', String address = 'beijing']) {
 //泛型
 void function7<T extends Person>(T person) {
   person.greet();
+}
+
+T function27<T extends Person>(T person) {
+  return person;
 }
 
 /**
@@ -362,14 +369,26 @@ function23(bool sw) {
     throw FormatException('format exception');
   }
 }
-
+//异常处理
 function24() {
   try {
-    function23(true);
+    function23(false);
+  } on FormatException {
+    print('FormatException');
   } catch (e) {
     print(e);
     rethrow; // rethrow可以将接收到的异常重新拋出去
   }
+}
+
+//dart中函数内部还可以定义函数
+function25() {
+  function26() {
+    print('function26');
+  }
+
+  print('function25');
+  function26();
 }
 
 void main() {
@@ -413,4 +432,6 @@ void main() {
   function21();
   print(function22(12, 23, function10));
   runStream();
+  function25();
+  function24();
 }

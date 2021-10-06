@@ -10,7 +10,7 @@ class Person {
   static String COUNTRY = "china";
 
   /**
-   * 变量和方法默认都是public的
+   * Dart中没有public private protected等访问修饰符，变量和方法默认都是public的
    */
   var name;
   int age = 10;
@@ -55,6 +55,7 @@ class Person {
   /**
    * 方法前面加'_'，是私有方法
    */
+  // ignore: not call
   _printHeight() {
     print('身高=$_height');
   }
