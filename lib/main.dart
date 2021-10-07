@@ -470,4 +470,5 @@ void main() {
   function25();
   function24();
   function28();
+  function30();
 }
