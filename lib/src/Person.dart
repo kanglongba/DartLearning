@@ -62,6 +62,25 @@ class Person {
     return Person.info('pony', age);
   }
 
+  /**
+   * 初始化参数列表列表
+   * 在函数体前，可使用初始化列表，就是在冒号后插入一些表达式
+   * 可插入赋值语句，对参数进行初始化，此时无法访问 this
+   * 可插入断言
+   * 插入 super 语句调用父类构造函数，这个语句必须放到最后面
+   * 可插入 this()重定向到本类的其他构造函数，但不可与其他语句混用
+   *
+   * 默认情况下，构造函数内部会根据继承关系有个调用顺序，初始化列表的调用时机在构造函数默认的调用时机最前面，顺序是：
+   * 1.初始化列表
+   * 2.父类无参构造函数
+   * 3.主类无参构造函数
+   */
+  Person.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        age = json['age'] {
+    print('In Person.fromJson(): ($name, $age)');
+  }
+
   String greet() => 'I am $name';
 
   /**

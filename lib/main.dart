@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:DartLearning/src/School.dart';
+import 'src/Todo.dart';
 
 import 'src/Dog.dart';
 import 'src/Person.dart';
@@ -375,8 +377,10 @@ function23(bool sw) {
 function24() {
   try {
     function23(false);
-  } on FormatException {
-    print('FormatException');
+  } on FormatException catch(e) {
+    print(e.message);
+  } on Exception {
+    print('unknown exception');
   } catch (e) {
     print(e);
     rethrow; // rethrow可以将接收到的异常重新拋出去
@@ -398,6 +402,28 @@ function28() {
   school.holiday(month: 7, day: 1);
 }
 
+@Todo('who', 'what')
+function29() {
+  print('使用注解');
+}
+
+//线程、Isolate
+Future function30() async {
+  ReceivePort receivePort = ReceivePort();
+  Isolate.spawn(function31, receivePort.sendPort);
+
+  receivePort.listen((message) {
+    print("Received message: ${message}");
+  });
+}
+
+function31(sendPort) async {
+  for(var message in ["01","02","03"]) {
+    (sendPort as SendPort).send(message);
+    await Future.delayed(Duration(seconds: 1));
+  }
+}
+
 void main() {
   print("Hello World!");
   var person = Person("qony");
@@ -407,6 +433,8 @@ void main() {
   Person.printCountry();
   //调用扩展函数
   person.study();
+  Person jack = Person.fromJson({'name':'jack','age':50});
+  jack.printName();
   d = "123";
   print(list6);
   print(map1["key1"]);

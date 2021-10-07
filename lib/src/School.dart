@@ -37,6 +37,10 @@ class School {
         formatDate(DateTime(year, month, day!), [yyyy, '-', mm, '-', dd]);
     print('holiday $date');
 
-    hello.NumberFormat.compact(locale: hello.Intl.defaultLocale);
+    // ?? 操作符，表示 boy 为空时才赋值，否则不赋值。
+    boy ??= B.Boy('pony', 'zju');
+
+    //下面代码运行会抛出异常：Deferred library hello was not loaded.
+    //hello.NumberFormat.compact(locale: hello.Intl.defaultLocale);
   }
 }
