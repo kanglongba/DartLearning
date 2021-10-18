@@ -7,9 +7,8 @@ class Boy extends Person {
    * 如果父类没有无参数构造函数，子类必须显示调用父类构造函数。
    * 构造函数执行顺序: 默认值->初始化列表->父类的构造函数->当前类的构造函数。
    */
-  Boy(name, String school) : super(name) {
+  Boy(var name, this.school) : super(name) {
     age = 19;
-    this.school = school;
   }
 
   /**

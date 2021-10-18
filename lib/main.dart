@@ -144,6 +144,25 @@ void function9() async {
   print('ip=$ip');
 }
 
+/// 使用 async 和 await 关键字可以让你避免回调地狱（Callback Hell）并使你的代码更具可读性。
+Future<void> createDescriptions(Iterable<String> objects) async {
+  for (var object in objects) {
+    try {
+      var file = File('$object.txt');
+      if (await file.exists()) {
+        var modified = await file.lastModified();
+        print(
+            'File for $object already exists. It was modified on $modified.');
+        continue;
+      }
+      await file.create();
+      await file.writeAsString('Start describing $object in this file.');
+    } on IOException catch (e) {
+      print('Cannot create description for $object: $e');
+    }
+  }
+}
+
 //Stream
 //异步生成器，生成的就是Stream
 Stream<String> readFile() async* {
@@ -384,6 +403,8 @@ function24() {
   } catch (e) {
     print(e);
     rethrow; // rethrow可以将接收到的异常重新拋出去
+  } finally {
+    print("task is over");
   }
 }
 

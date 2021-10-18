@@ -28,7 +28,10 @@ class Person {
    * 这个是简略写法，相当于下面被注释的构造函数
    *
    */
-  Person(this.name);
+  Person(this.name) {
+    // Initialization code goes here.
+    // 如果没有初始化代码，也可以直接省略函数体
+  }
 
   // Person(String name) {
   //   this.name = name;
@@ -77,8 +80,10 @@ class Person {
    * 3.主类无参构造函数
    */
   Person.fromJson(Map<String, dynamic> json)
-      : name = json['name'], //函数签名之后，函数体之前，就是初始化参数列表
-        age = json['age'] {  //本例中，name和age就是初始化参数列表
+      : name = json['name'],
+        //函数签名之后，函数体之前，就是初始化参数列表
+        age = json['age'] {
+    //本例中，name和age就是初始化参数列表
     print('In Person.fromJson(): ($name, $age)');
   }
 
