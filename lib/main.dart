@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:DartLearning/src/Boy.dart';
 import 'package:DartLearning/src/School.dart';
 import 'src/Todo.dart';
 
@@ -36,6 +37,11 @@ String i = r'在 raw 字符串中，转义字符串 \n 会直接输出 “\n” 
 var k = null;
 //表达式 1 ?? 表达式 2：如果表达式 1 为非 null 则返回其值，否则执行表达式 2 并返回其值
 var l = k ?? i;
+//延迟初始化。在使用前，保证完成初始化即可。类似于Kotlin中的 lateinit 。
+late var m;
+//也可以在声明时，就初始化。但是真正的初始化操作，在变量第一次调用的时候才执行。
+late var n = 1;
+late String myName = getName();
 
 List list1 = [1, 2, 3];
 var list2 = [1, '123', false, 4];
@@ -49,12 +55,14 @@ var isIOS = false;
 var list5 = ["windows", if (isIOS) 'ios' else 'android', "unix", 'linux'];
 var list6 = ['unknown', for (var i in list5) i.toUpperCase()];
 
+//Map 可以像 List 一样支持使用扩展操作符（... 和 ...?）以及集合的 if 和 for 操作。
 var map1 = {
   "key1": "value1",
   "key2": 2,
   "key3": [1, 2, 3]
 };
 
+//从 Dart 2.3 开始，Set 可以像 List 一样支持使用扩展操作符（... 和 ...?）以及 Collection if 和 for 操作。
 var set1 = {'pony', 'jack', 'charles'};
 
 //指定类型
@@ -64,8 +72,8 @@ var map2 = <String, int>{'key1': 1, 'key2': 2};
 
 /**
  * dart中函数也是对象，它的类型是Function。它可以被赋值给变量或者作为其他函数的参数。
- * 所有的函数都有返回值，如果函数返回值定义为void，则接收到的返回值其实是null.
- * 如果省略了函数的返回值类型声明，那么函数返回一个 dynamic 类型的值。
+ *
+ * 所有的函数都有返回值。没有显示返回语句的函数，或者函数返回值定义为void，最后一行默认为执行 return null;
  */
 int fibonacci(int n) {
   if (n == 0 || n == 1) {
@@ -75,7 +83,14 @@ int fibonacci(int n) {
 }
 
 //对于只有一个表达式的函数，可以使用=>语法。和Kotlin很像。
+//在 => 与 ; 之间的只能是 表达式 而非 语句。比如你不能将一个 if语句 放在其中，但是可以放置 条件表达式。
+//胖箭头写法，表达式的值，就是返回值。
 getName() => "1234567";
+//类型推断，返回值是 int 类型
+getAge() {
+   return 17;
+}
+
 //函数类型的变量。同Kotlin。也是dart中的匿名函数。
 var function1 = (String str) {
   str.toUpperCase();
@@ -203,7 +218,7 @@ int function10(int a, int b) {
 }
 
 //函数类型的变量
-var h = (int a, int b) {
+Function h = (int a, int b) {
   return a + b;
 };
 
@@ -360,6 +375,10 @@ function20() {
     ..sayHello()
     ..greet()
     ..height789 = 226;
+
+  jack
+    ?..sayHello() //非空级联
+    ..study();
 }
 
 //这段代码有意思。
@@ -492,4 +511,11 @@ void main() {
   function24();
   function28();
   function30();
+  Boy lilei = Boy('李雷', '断罪小学');
+  // as 类型转换
+  // is 如果对象是指定类型则返回 true
+  // is! 如果对象是指定类型则返回 false
+  if(lilei is Person) {
+    (lilei as Person).study(); //其实这里的强转可以省略了，编译器会自动识别lilei为Person类型。
+  }
 }
