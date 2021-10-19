@@ -376,7 +376,8 @@ function20() {
     ..greet()
     ..height789 = 226;
 
-  jack
+  Person? pony = null;
+  pony
     ?..sayHello() //非空级联
     ..study();
 }
@@ -415,7 +416,7 @@ function23(bool sw) {
 function24() {
   try {
     function23(false);
-  } on FormatException catch(e) {
+  } on FormatException catch(e) { //on 不捕获异常，catch 捕获异常
     print(e.message);
   } on Exception {
     print('unknown exception');
@@ -512,6 +513,8 @@ void main() {
   function28();
   function30();
   Boy lilei = Boy('李雷', '断罪小学');
+  //可以使用 Object 对象的 runtimeType 属性在运行时获取一个对象的类型，该对象类型是 Type 的实例
+  print('The type of a is ${lilei.runtimeType}');
   // as 类型转换
   // is 如果对象是指定类型则返回 true
   // is! 如果对象是指定类型则返回 false
