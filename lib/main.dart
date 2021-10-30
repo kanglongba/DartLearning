@@ -390,7 +390,7 @@ function21() {
     //列表的元素是一个函数。在Dart中函数也是一个对象，类型是Function。
     callbacks.add(() => print(i));
   }
-  //遍历列表，并调用函数。最终输出 0 和 1.
+  //遍历列表，并调用函数。最终输出 0 和 1.闭包能保存当时的值。
   callbacks.forEach((c) => c());
   // callbacks.forEach((element) {
   //   element();
