@@ -99,7 +99,7 @@ function6() {
   }).catchError((e) {
     //使用catchError来处理异常
     print(e);
-  });
+  }).whenComplete(() => print('complete'));
 
   print("main stop");
 }
@@ -127,6 +127,9 @@ function7() {
 
   Future fut = Future.wait([task1, task2, task3]);
   fut.then((responses) {
+    print(responses[0]);
+    print(responses[1]);
+    print(responses[2]);
     print(responses);
   });
 
@@ -164,6 +167,6 @@ void main() {
   // function3();
   // function4();
   // function6();
-  //function7();
+  // function7();
   function8();
 }
