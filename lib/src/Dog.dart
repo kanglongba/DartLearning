@@ -13,11 +13,17 @@ import 'Sleep.dart';
  * 需要注意的是如果被mixin的类中有同名的函数，那么最后一个混入的函数会覆盖之前的函数。
  *
  * 可以继承混入类的成员变量和成员方法
+ * 可以重写混入类的方法，也可以不重写
  *
  * 这篇文章关于mixin的阐述非常好：https://km.woa.com/group/38862/articles/show/389234
  */
 class Dog extends Animal with Run, Sleep {
   void play() {
     print('play');
+  }
+
+  @override
+  void run() {
+    print('dog run');
   }
 }
