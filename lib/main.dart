@@ -86,7 +86,7 @@ int fibonacci(int n) {
 //在 => 与 ; 之间的只能是 表达式 而非 语句。比如你不能将一个 if语句 放在其中，但是可以放置 条件表达式。
 //胖箭头写法，表达式的值，就是返回值。
 getName() => "1234567";
-//函数返回值没有类型推断，如果没有显式声明返回值类型时会默认当做 dynamic处 理。这里getName()和getAge()的返回值都是 dynamic 类型。
+//函数返回值没有类型推断，如果没有显式声明返回值类型，会默认当做 dynamic处 理。这里getName()和getAge()的返回值都是 dynamic 类型。
 getAge() {
    return 17;
 }
@@ -367,7 +367,7 @@ function19() {
   (jack as Person).printName();
 }
 
-//级联操作，效果类似Kotlin中的let/apply这类方法
+//级联操作，效果类似Kotlin中的run/apply这类方法
 function20() {
   var jack = Person('charles');
   jack
